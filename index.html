@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anil Kumar Gorthi — Cybersecurity Analyst</title>
+<meta name="description" content="Anil Kumar Gorthi — Cybersecurity Analyst. SOC operations, cloud security, application security assessments, and offensive security research.">
+<script>
+  (function(){
+    try{
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      if(theme === 'light'){ document.documentElement.setAttribute('data-theme','light'); }
+    }catch(e){}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14130f;
+    --bg-raised: #1b1a15;
+    --line: rgba(237,231,215,0.09);
+    --line-strong: rgba(237,231,215,0.18);
+    --text: #ece7dc;
+    --text-dim: #a39d8c;
+    --text-faint: #6e6a5d;
+    --amber: #e0a23d;
+    --amber-dim: #a67a30;
+    --teal: #6fa89f;
+    --max: 720px;
+    --pad: 24px;
+  }
+
+  :root[data-theme="light"]{
+    --bg: #efece1;
+    --bg-raised: #e7e2d2;
+    --line: rgba(32,29,22,0.10);
+    --line-strong: rgba(32,29,22,0.20);
+    --text: #221f18;
+    --text-dim: #5c5748;
+    --text-faint: #8a8571;
+    --amber: #a3701c;
+    --amber-dim: #8a5f18;
+    --teal: #2f6b62;
+  }
+
+  *{ box-sizing: border-box; }
+  body, .links a, .card, .entry::before, .theme-switch-track, .theme-switch-thumb, .termbar, a{
+    transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+  }
+
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(224,162,61,0.05), transparent 60%);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(111,168,159,0.35); }
+  a:hover{ border-bottom-color: var(--teal); }
+  a:focus-visible, button:focus-visible{ outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  code, .mono{ font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  /* ---------- terminal chrome header ---------- */
+  .termbar{
+    position: sticky; top:0; z-index:10;
+    background: rgba(20,19,15,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .termbar-inner{
+    max-width: var(--max); margin: 0 auto; padding: 12px var(--pad);
+    display:flex; align-items:center; justify-content: space-between; gap: 16px;
+  }
+  .dots{ display:flex; gap:6px; flex-shrink:0; }
+  .dots span{ width:9px; height:9px; border-radius:50%; background: var(--line-strong); }
+  .termtitle{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color: var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  nav{ display:flex; gap:18px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; flex-shrink:0; }
+  nav a{ color: var(--text-dim); border-bottom: none; }
+  nav a:hover{ color: var(--amber); }
+
+  .theme-switch{
+    background:none; border:none; padding:0; margin:0; cursor:pointer; flex-shrink:0;
+    display:flex; align-items:center;
+  }
+  .theme-switch-track{
+    width:38px; height:20px; border-radius:10px; display:block; position:relative;
+    background: var(--bg-raised); border: 1px solid var(--line-strong);
+  }
+  .theme-switch-thumb{
+    position:absolute; top:1px; left:1px; width:16px; height:16px; border-radius:50%;
+    background: var(--amber);
+    transform: translateX(0);
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1), background-color 0.35s ease;
+  }
+  [data-theme="light"] .theme-switch-thumb{ transform: translateX(18px); background: var(--amber); }
+
+  main{ max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+
+  section{ padding: 64px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type{ border-bottom: none; }
+
+  .prompt{
+    font-family:'IBM Plex Mono',monospace; font-size: 13px; color: var(--amber-dim);
+    margin: 0 0 14px 0;
+  }
+  .prompt::before{ content: "$ "; color: var(--text-faint); }
+
+  h1,h2,h3{ font-weight: 600; margin: 0; }
+  h2{ font-size: 1.5rem; margin-bottom: 20px; letter-spacing: -0.01em; }
+  p{ margin: 0 0 14px 0; color: var(--text); max-width: 66ch; }
+  .dim{ color: var(--text-dim); }
+
+  /* ---------- hero ---------- */
+  .hero{ padding: 72px 0 56px 0; border-bottom: 1px solid var(--line); }
+  .hero .prompt{ margin-bottom: 8px; }
+  .hero h1{
+    font-family:'IBM Plex Mono',monospace;
+    font-size: clamp(1.6rem, 4.2vw, 2.35rem);
+    line-height:1.25;
+    color: var(--text);
+  }
+  .hero h1 .cursor{
+    display:inline-block; width:0.5em; height:1em; background: var(--amber);
+    vertical-align:-0.15em; margin-left:4px;
+    animation: blink 1.05s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .hero .role{ font-family:'IBM Plex Mono',monospace; color: var(--teal); font-size:0.95rem; margin-top:10px; }
+  .hero .lede{ margin-top:18px; color: var(--text-dim); max-width: 58ch; }
+
+  .links{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 28px; }
+  .links a{
+    font-family:'IBM Plex Mono',monospace; font-size: 13px; color: var(--text);
+    border: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong);
+    padding: 9px 14px; border-radius: 3px; background: var(--bg-raised);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .links a:hover{ border-color: var(--amber-dim); color: var(--amber); }
+  .links a.primary{ border-color: var(--amber-dim); color: var(--amber); }
+  .links a.primary:hover{ border-color: var(--amber); }
+
+  /* ---------- about ---------- */
+  .about p{ color: var(--text-dim); }
+
+  /* ---------- experience ---------- */
+  .entry{ margin-bottom: 34px; padding-left: 18px; border-left: 2px solid var(--line); position:relative; }
+  .entry:last-child{ margin-bottom:0; }
+  .entry::before{
+    content:""; position:absolute; left:-6px; top:5px; width:9px; height:9px;
+    border-radius:50%; background: var(--bg); border: 2px solid var(--amber-dim);
+  }
+  .entry-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 12px; margin-bottom:6px; }
+  .entry-head h3{ font-size: 1.02rem; }
+  .entry-meta{ font-family:'IBM Plex Mono',monospace; font-size: 12px; color: var(--text-faint); }
+  .entry ul{ margin: 8px 0 0 0; padding-left: 18px; color: var(--text-dim); }
+  .entry li{ margin-bottom: 5px; }
+
+  /* ---------- projects & research ---------- */
+  .card{
+    border: 1px solid var(--line); border-radius: 4px; padding: 18px 20px;
+    margin-bottom: 14px; background: var(--bg-raised);
+  }
+  .card:last-child{ margin-bottom:0; }
+  .card-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .card h3{ font-size: 1rem; }
+  .tag{ font-family:'IBM Plex Mono',monospace; font-size: 11px; color: var(--text-faint); white-space:nowrap; }
+  .card p{ color: var(--text-dim); margin-top: 8px; margin-bottom:0; font-size: 0.95rem; }
+
+  /* ---------- skills ---------- */
+  .skillgrid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 22px 32px; }
+  @media (max-width: 560px){ .skillgrid{ grid-template-columns: 1fr; } }
+  .skillgroup .prompt{ font-size: 12px; margin-bottom: 10px; }
+  .skillgroup ul{ list-style:none; margin:0; padding:0; color: var(--text-dim); font-size:0.93rem; }
+  .skillgroup li{ padding: 3px 0; }
+  .skillgroup li::before{ content: "· "; color: var(--amber-dim); }
+
+  /* ---------- education ---------- */
+  .edu-row{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+  .edu-row:last-child{ margin-bottom:0; }
+  .edu-row div:first-child{ font-size:0.97rem; }
+  .edu-row .entry-meta{ text-align:right; }
+  .certs{ margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); display:flex; gap: 22px; flex-wrap:wrap; }
+  .certs span{ font-family:'IBM Plex Mono',monospace; font-size: 12.5px; color: var(--text-dim); }
+  .certs span b{ color: var(--text); font-weight:500; }
+
+  /* ---------- contact / footer ---------- */
+  footer{ padding: 56px 0 64px 0; }
+  footer .prompt{ margin-bottom: 18px; }
+  footer p{ color: var(--text-dim); }
+  .foot-links{ margin-top: 22px; display:flex; flex-wrap:wrap; gap: 4px 22px; font-family:'IBM Plex Mono',monospace; font-size: 13px; }
+  .copyright{ margin-top: 46px; font-family:'IBM Plex Mono',monospace; font-size: 11.5px; color: var(--text-faint); }
+</style>
+</head>
+<body>
+
+<div class="termbar">
+  <div class="termbar-inner">
+    <div style="display:flex; align-items:center; gap:14px; min-width:0;">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="termtitle">anil@security:~$</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <nav>
+        <a href="#about">about</a>
+        <a href="#experience">experience</a>
+        <a href="#projects">projects</a>
+        <a href="#research">research</a>
+        <a href="#contact">contact</a>
+      </nav>
+      <button id="theme-toggle" class="theme-switch" type="button" aria-label="Switch to light theme" aria-pressed="false">
+        <span class="theme-switch-track"><span class="theme-switch-thumb"></span></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <section class="hero">
+    <p class="prompt mono">whoami</p>
+    <h1>Anil Kumar Gorthi<span class="cursor" aria-hidden="true"></span></h1>
+    <p class="role">Cybersecurity Analyst · SOC &amp; Multi-Cloud Security (AWS/Azure/GCP) · Boston, MA</p>
+    <p class="lede">I assess systems, break things on purpose so no one else has to, and build the infrastructure and documentation that keep security programs running after I leave the room. M.S. in Cybersecurity from Northeastern University.</p>
+    <div class="links">
+      <a class="primary" href="mailto:anilkgorthi@gmail.com">email me</a>
+      <a href="https://www.linkedin.com/in/anil-gorthi" target="_blank" rel="noopener">linkedin</a>
+      <a href="https://github.com/unneal" target="_blank" rel="noopener">github</a>
+      <a href="https://scholar.google.com/citations?user=5pNNNnQAAAAJ" target="_blank" rel="noopener">google scholar</a>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <p class="prompt">cat about.md</p>
+    <h2>About</h2>
+    <p>I work across the parts of security that most teams underinvest in: SOC operations, cloud configuration, and the assessments that catch what automated scanners miss. My M.S. in Cybersecurity is backed by hands-on threat detection, incident response, and cloud security monitoring across AWS, Azure, and GCP. I'm currently looking for full-time SOC, GRC, or application security roles.</p>
+  </section>
+
+  <section id="experience">
+    <p class="prompt">ls experience/</p>
+    <h2>Experience</h2>
+
+    <div class="entry">
+      <div class="entry-head">
+        <h3>Cybersecurity Analyst — Community Dreams Foundation</h3>
+        <span class="entry-meta">Boston, MA · Oct 2025 – Jul 2026</span>
+      </div>
+      <ul>
+        <li>Improved compliance posture by 25% by implementing RBAC, MFA, and PKI/TLS controls while monitoring and triaging SOC alerts for threat detection and incident response across cloud environments</li>
+        <li>Scaled secure cloud capacity by 60% by hardening infrastructure with Terraform-managed KMS encryption, TLS enforcement, VPC segmentation, and firewall controls aligned to CIS Benchmarks and NIST CSF</li>
+        <li>Cut incident response time by 15% by developing and standardizing CSIRT procedures, IR playbooks, and SOPs for audit-ready security operations</li>
+        <li>Surfaced a critical SSRF vulnerability and five high-severity findings by running a gray-box security assessment of the UpSkill platform (Lovable/Supabase), plus a 13-section reconnaissance report and RLS audit on two other production Supabase projects</li>
+        <li>Eliminated a fragmented password-management process by deploying Vaultwarden via Terraform on GCP, after building the technical case against a proposed in-house alternative and authoring the org's password management policy</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <h3>Security Analyst — Mobile Heartbeat</h3>
+        <span class="entry-meta">Boston, MA · Jan 2025 – Apr 2025</span>
+      </div>
+      <ul>
+        <li>Reduced risk exposure by 35% by triaging 25+ security incidents through behavioral analysis of anomalous activity in Azure Sentinel/Log Analytics (KQL) and EDR tooling, then driving remediation</li>
+        <li>Strengthened security posture by 20% by threat hunting across the environment, surfacing 55+ previously unidentified risks and vulnerabilities</li>
+        <li>Remediated 25+ non-compliant configurations by auditing 100+ Azure resources and prioritizing fixes for the top 3 root causes of security incidents</li>
+        <li>Validated compliance across NIST CSF, GDPR, and HIPAA by correlating cloud configurations against all three frameworks and presenting remediation timelines to senior leadership</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <h3>Software Developer Intern — Plus Delta</h3>
+        <span class="entry-meta">Vizag, AP, India · May 2022 – Jul 2022</span>
+      </div>
+      <ul>
+        <li>Increased platform security by 35% by performing vulnerability assessments and penetration tests across 80+ API endpoints and delivering remediation recommendations</li>
+        <li>Accelerated vulnerability remediation by 25% by developing Python automation that integrated security findings directly into CI/CD pipelines</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects">
+    <p class="prompt">ls projects/</p>
+    <h2>Projects</h2>
+
+    <div class="card">
+      <div class="card-head"><h3>Swift Security Scanner</h3><span class="tag">CLI tool</span></div>
+      <p>Built a command-line scanner covering the full OWASP Mobile Top 10 (2024 revision) by parsing iOS/Swift codebases for common insecure patterns, giving mobile teams a fast first pass before manual review.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Wireless doorbell replay attack</h3><span class="tag">RF / SDR</span></div>
+      <p>Improved IoT threat detection by 15% by reverse-engineering a 433.95 MHz wireless system with a PlutoSDR and GNU Radio, analyzing 1,200+ captured RF bursts, and simulating replay attacks across 15 devices.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Blind remote buffer overflow &amp; reverse shell</h3><span class="tag">Exploit dev</span></div>
+      <p>Achieved a 95% exploit hit rate by automating a Python tool for stack layout identification, NOP sled tuning, and payload sizing against a remote target with no local debugging access.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Windows insider threat investigation</h3><span class="tag">Digital forensics</span></div>
+      <p>Improved threat detection rate by 20% by conducting digital and browser forensics across a 60GB Windows disk image, uncovering user activity tied to potentially compromised accounts and implementing new detection strategies from the findings.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Vaultwarden on GCP</h3><span class="tag">Infra / Terraform</span></div>
+      <p>Built foundational Terraform and GCP infrastructure for a self-hosted Vaultwarden deployment, designed as a portable pattern that could be reused for future password-management rollouts.</p>
+    </div>
+  </section>
+
+  <section id="research">
+    <p class="prompt">ls research/ | sort -k date -r</p>
+    <h2>Research</h2>
+
+    <div class="card">
+      <div class="card-head"><h3>Evaluation of Risk and Resilience of the MBTA Green Rapid Transit System</h3><span class="tag">arXiv · Dec 2025</span></div>
+      <p>Pinpointed five critical network vulnerabilities in infrastructure serving 100,000+ daily riders by modeling the MBTA Green Line's cyber-physical risk with graph theory, network centrality measures, and Model-Based Risk Analysis (MBRA) in Python. Originally written for a Northeastern course, revised and posted publicly.</p>
+      <p><a href="https://arxiv.org/abs/2512.10088" target="_blank" rel="noopener">Read on arXiv</a></p>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Credit Risk Management using Logistic and Linear Regression</h3><span class="tag">JETIR · Apr 2023</span></div>
+      <p>Co-authored a study on modeling credit risk (LGD, PD, EAD) with logistic and linear regression, examining the role of big data and regulatory frameworks in credit risk practice.</p>
+      <p><a href="https://www.jetir.org/view?paper=JETIR2304310" target="_blank" rel="noopener">Read on JETIR</a></p>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Alzheimer's Disease Recognition using CNN Model with EfficientNetV2</h3><span class="tag">IEEE ASIANCON · Aug 2022</span></div>
+      <p>Co-authored a CNN/EfficientNetV2 approach for classifying Alzheimer's disease from MRI scans, using transfer learning to retrain on a smaller labeled dataset. Presented at the 2022 IEEE Asian Conference on Innovation in Technology.</p>
+      <p><a href="https://ieeexplore.ieee.org/abstract/document/9908834/" target="_blank" rel="noopener">Read on IEEE Xplore</a></p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <p class="prompt">cat skills.yaml</p>
+    <h2>Skills</h2>
+    <div class="skillgrid">
+      <div class="skillgroup">
+        <p class="prompt mono">detection &amp; SOC</p>
+        <ul>
+          <li>SIEM (Azure Sentinel, Log Analytics/KQL, Splunk)</li>
+          <li>Alert triage &amp; threat hunting</li>
+          <li>Incident response &amp; IR playbooks</li>
+          <li>IDS/IPS, EDR, NGFW</li>
+          <li>Vulnerability &amp; threat modeling</li>
+        </ul>
+      </div>
+      <div class="skillgroup">
+        <p class="prompt mono">cloud &amp; infrastructure</p>
+        <ul>
+          <li>AWS, Azure, GCP</li>
+          <li>Terraform (IaC)</li>
+          <li>Zero Trust, WAF, Okta</li>
+          <li>VPC/VNet segmentation</li>
+          <li>KMS / encryption at rest &amp; in transit</li>
+        </ul>
+      </div>
+      <div class="skillgroup">
+        <p class="prompt mono">offensive security</p>
+        <ul>
+          <li>Penetration testing</li>
+          <li>Web application assessments</li>
+          <li>RF / SDR security research</li>
+          <li>Exploit development</li>
+          <li>SAST/DAST integration</li>
+        </ul>
+      </div>
+      <div class="skillgroup">
+        <p class="prompt mono">governance &amp; compliance</p>
+        <ul>
+          <li>NIST CSF, CIS Benchmarks</li>
+          <li>SOC 2, HITRUST</li>
+          <li>GDPR, HIPAA</li>
+          <li>Security policy authorship</li>
+        </ul>
+      </div>
+      <div class="skillgroup">
+        <p class="prompt mono">scripting &amp; platforms</p>
+        <ul>
+          <li>Python, C, Java, PowerShell, SQL</li>
+          <li>Git/GitHub, CI/CD pipeline security</li>
+          <li>Windows, Linux (Ubuntu, Kali, Arch, Tails), macOS</li>
+          <li>TCP/IP, HTTP, DNS, IoT devices</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <p class="prompt">cat education.md</p>
+    <h2>Education &amp; certifications</h2>
+    <div class="edu-row">
+      <div>M.S. Cybersecurity — Northeastern University</div>
+      <div class="entry-meta">2025 · GPA 3.5/4.0</div>
+    </div>
+    <div class="edu-row">
+      <div>B.Tech Computer Science &amp; Engineering — GITAM University</div>
+      <div class="entry-meta">2019–2023 · GPA 8.57/10.0, distinction</div>
+    </div>
+    <div class="certs">
+      <span><b>CompTIA Security+</b> · May 2025</span>
+      <span><b>ISC2 Certified in Cybersecurity (CC)</b> · Aug 2025</span>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <p class="prompt">./contact.sh</p>
+    <h2>Get in touch</h2>
+    <p>Open to full-time SOC, GRC, and application security roles — especially teams that sponsor H-1B. Fastest way to reach me is email.</p>
+    <div class="foot-links">
+      <a href="mailto:anilkgorthi@gmail.com">anilkgorthi@gmail.com</a>
+      <a href="https://www.linkedin.com/in/anil-gorthi" target="_blank" rel="noopener">linkedin.com/in/anil-gorthi</a>
+      <a href="https://github.com/unneal" target="_blank" rel="noopener">github.com/unneal</a>
+      <a href="https://scholar.google.com/citations?user=5pNNNnQAAAAJ" target="_blank" rel="noopener">google scholar</a>
+    </div>
+    <p class="copyright">Built &amp; maintained by Anil Kumar Gorthi.</p>
+  </footer>
+
+</main>
+
+<script>
+  (function(){
+    var root = document.documentElement;
+    var toggle = document.getElementById('theme-toggle');
+
+    function current(){
+      return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    }
+    function sync(theme){
+      toggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+      toggle.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+    }
+
+    sync(current());
+
+    toggle.addEventListener('click', function(){
+      var next = current() === 'light' ? 'dark' : 'light';
+      if(next === 'light'){ root.setAttribute('data-theme','light'); }
+      else{ root.removeAttribute('data-theme'); }
+      try{ localStorage.setItem('theme', next); }catch(e){}
+      sync(next);
+    });
+  })();
+</script>
+
+</body>
+</html>
